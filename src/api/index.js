@@ -23,6 +23,7 @@ class Api {
             team: teams[index],
           }))))
           .then(res => res.reduce((src, ind) => src.concat(ind), []))
+          .catch(console.log)
       })
   }
 
