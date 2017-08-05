@@ -11,6 +11,13 @@ class PlayerStore {
     this.players.filter(player => player.position === value)
   )
 
+  getRandomPlayer(position, ids = []) {
+    const players = this.getPlayersByPosition(position)
+      .filter(player => !ids.includes(player.id))
+
+    return players[Math.floor(Math.random() * players.length)]
+  }
+
   @action setPlayers(players) {
     localStorage.setItem('398:players', JSON.stringify(players))
     this.resolved = true

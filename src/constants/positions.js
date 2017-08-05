@@ -11,6 +11,6 @@ export default {
   LW: 'Left Wing',
   RW: 'Right Wing',
   SS: 'Secondary Striker',
-  CF: 'Centre Forward',
+  CF: 'Centre-Forward',
 }
 

@@ -1,14 +1,26 @@
 import { observable, action } from 'mobx'
-import FORMATIONS from '../constants/formations'
+import shortid from 'shortid'
+import PlayerStore from './Player'
 
 class Squad {
   @observable formation
   @observable players
 
   constructor(formation, players = []) {
-    this.id = Math.random()
+    this.id = shortid.generate()
     this.formation = formation
     this.players = players
+
+    if (!players.length) {
+      this.findPlayers()
+    }
+  }
+
+  findPlayers() {
+    this.formation.positions.forEach((position) => {
+      const player = PlayerStore.getRandomPlayer(position, this.players.map(player => player.id))
+      this.players.push(player)
+    })
   }
 
   @action addPlayer(player) {
@@ -21,16 +33,15 @@ class Squad {
 }
 
 class SquadStore {
-  @observable currentSquad
+  @observable squad
   @observable archivedSquads = []
 
-  constructor() {
-    this.currentSquad = new Squad(FORMATIONS[0])
+  @action createSquad(formation) {
+    this.squad = new Squad(formation)
   }
 
   @action archiveSquad() {
     this.archivedSquads.push(this.currentSquad)
-    this.currentSquad = new Squad(FORMATIONS[0])
   }
 }
 

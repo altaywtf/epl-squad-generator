@@ -1,3 +1,5 @@
+import shortid from 'shortid'
+
 class Api {
   constructor(options = {}) {
     this.token = options.token
@@ -16,7 +18,10 @@ class Api {
       .then(({ teams }) => {
         return Promise
           .all(teams.map(t => this.send(t._links.players.href)))
-          .then(res => res.map((result, index) => result.players.map(player => Object.assign(player, { team: teams[index] }))))
+          .then(res => res.map((result, index) => result.players.map(player => Object.assign(player, {
+            id: shortid.generate(),
+            team: teams[index],
+          }))))
           .then(res => res.reduce((src, ind) => src.concat(ind), []))
       })
   }
