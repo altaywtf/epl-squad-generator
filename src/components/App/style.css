@@ -7,10 +7,26 @@ body {
 }
 
 ul {
+  width: 440px;
   padding-left: 0;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  padding: 20px;
 }
 
 ul > li {
   list-style-type: none;
+  text-align: left;
+  margin: 5px 0;
+}
+
+.position {
+  font-weight: bold;
+}
+
+.info {
+  text-align: left;
+  float: right;
+  width: 300px;
 }
 

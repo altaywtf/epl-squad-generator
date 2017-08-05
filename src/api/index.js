@@ -38,7 +38,7 @@ class Api {
 }
 
 export default new Api({
-  // token: '62ab64a9657c4641a574993fcf699e51',
-  token: '6fb02f02fe274a70bced416ee51794d5',
+  token: '62ab64a9657c4641a574993fcf699e51',
+  // token: '6fb02f02fe274a70bced416ee51794d5',
 })
 

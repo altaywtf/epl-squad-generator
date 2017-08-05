@@ -4,31 +4,18 @@ import PlayerStore from './Player'
 
 class Squad {
   @observable formation
-  @observable players
+  @observable players = []
 
-  constructor(formation, players = []) {
+  constructor(formation, players) {
     this.id = shortid.generate()
     this.formation = formation
-    this.players = players
-
-    if (!players.length) {
-      this.findPlayers()
-    }
+    this.players = players || this.findPlayers()
   }
 
   findPlayers() {
-    this.formation.positions.forEach((position) => {
-      const player = PlayerStore.getRandomPlayer(position, this.players.map(player => player.id))
-      this.players.push(player)
-    })
-  }
-
-  @action addPlayer(player) {
-    this.players.push(player)
-  }
-
-  @action setFormation(selection) {
-    this.formation = selection
+    return this.formation.positions.map(position =>
+      PlayerStore.getRandomPlayer(position, this.players.map(player => player.id))
+    )
   }
 }
 

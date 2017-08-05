@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { observer, inject } from 'mobx-react'
-import './style.css'
 
 import FORMATIONS from '../../constants/formations'
+import './style.css'
 
 @inject('playerStore', 'squadStore')
 @observer
@@ -31,9 +31,12 @@ export default class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-        <select value={this.state.formationName} onChange={this.onSelectFormation}>
+    const content = this.props.playerStore.resolved ? (
+      <div>
+        <select
+          value={this.state.formationName}
+          onChange={this.onSelectFormation}
+        >
           <option value="" disabled>
             Select a Formation
           </option>
@@ -49,11 +52,27 @@ export default class App extends Component {
           <ul>
             {this.props.squadStore.squad.players.map(p => (
               <li key={p.id}>
-                {p.position} - {p.name}
+                <span className="position">
+                  {p.position}
+                </span>
+
+                <span className="info">
+                  {p.name} ({p.team.name})
+                </span>
               </li>
             ))}
           </ul>
         }
+      </div>
+    ) : (
+      <div>
+        Fetching player data...
+      </div>
+    )
+
+    return (
+      <div>
+        {content}
       </div>
     )
   }
