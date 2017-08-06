@@ -3,7 +3,7 @@ import shortid from 'shortid'
 class Api {
   constructor(options = {}) {
     this.token = options.token
-    this.baseURL = 'http://api.football-data.org/v1'
+    this.baseURL = 'https://api.football-data.org/v1'
   }
 
   // Teams of a Specific Competition
@@ -17,7 +17,7 @@ class Api {
     return this.fetchTeams(competitionID)
       .then(({ teams }) => {
         return Promise
-          .all(teams.map(t => this.send(t._links.players.href)))
+          .all(teams.map(t => this.send(t._links.players.href.replace('http', 'https'))))
           .then(res => res.map((result, index) => result.players.map(player => Object.assign(player, {
             id: shortid.generate(),
             team: teams[index],
